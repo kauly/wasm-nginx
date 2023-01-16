@@ -1,0 +1,19 @@
+[package]
+name = "assets-test"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = { version = "0.9.1", features = ["jpeg"]}
+bevy_egui = "0.17.0"
+bevy_web_asset = "0.5.0"
+
+simula_core = { git = "https://github.com/Simbotic/simula.git", branch = "main" }
+simula_camera = { git = "https://github.com/Simbotic/simula.git", branch = "main" }
+simula_viz = { git = "https://github.com/Simbotic/simula.git", branch = "main" }
+simula_action = { git = "https://github.com/Simbotic/simula.git", branch = "main" }
+
+[profile.release]
+lto = true
