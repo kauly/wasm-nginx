@@ -16,4 +16,4 @@ simula_viz = { git = "https://github.com/Simbotic/simula.git", branch = "main" }
 simula_action = { git = "https://github.com/Simbotic/simula.git", branch = "main" }
 
 [profile.release]
-lto = true
+lto = false

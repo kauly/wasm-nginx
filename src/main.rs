@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy_egui::EguiPlugin;
+use bevy_web_asset::WebAssetPlugin;
 use simula_action::ActionPlugin;
 use simula_camera::orbitcam::*;
 use simula_viz::{
@@ -9,7 +10,8 @@ use simula_viz::{
 
 fn main() {
     let mut app = App::new();
-    app.add_plugins(DefaultPlugins)
+    app.add_plugin(WebAssetPlugin::default())
+        .add_plugins(DefaultPlugins.build().disable::<AssetPlugin>())
         .add_plugin(EguiPlugin)
         .add_plugin(ActionPlugin)
         .add_plugin(OrbitCameraPlugin)
@@ -32,13 +34,7 @@ fn setup(
     line_mesh: Res<LineMesh>,
     asset_server: Res<AssetServer>,
 ) {
-    commands.spawn((
-        Camera3dBundle {
-            transform: Transform::from_xyz(-2.5, 5.0, -25.0).looking_at(Vec3::ZERO, Vec3::Y),
-            ..default()
-        },
-        OrbitCamera::default(),
-    ));
+    commands.spawn((Camera3dBundle::default(), OrbitCamera::default()));
 
     commands.spawn(GridBundle {
         grid: Grid {
@@ -51,11 +47,12 @@ fn setup(
     });
 
     commands.spawn(SceneBundle {
-        scene: asset_server.load("scenes/halo/scene.gltf#Scene0"),
+        scene: asset_server.load("http://localhost:8080/scenes/halo/scene.gltf#Scene0"),
         ..default()
     });
 
-    let ball_texture = asset_server.load("textures/ball/painted_metal_shutter_diff_4k.jpg");
+    let ball_texture =
+        asset_server.load("http://localhost:8080/textures/ball/painted_metal_shutter_diff_4k.jpg");
     let ball_material = materials.add(StandardMaterial {
         base_color: Color::WHITE,
         base_color_texture: Some(ball_texture),

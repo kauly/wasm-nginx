@@ -1,0 +1,11 @@
+services:
+  asset-server:
+    image: nginx-gzip-brotli
+    ports:
+      - 8080:8080
+  wasm-server:
+    image: wasm-nginx
+    ports:
+      - 3000:80
+    depends_on:
+      - asset-server
